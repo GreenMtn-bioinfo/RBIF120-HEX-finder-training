@@ -7,7 +7,9 @@ Contact: run478@gmail.com, bjayaram@chemistry.iitd.ac.in
 Lab Webpage: www.scfbio-iitd.res.in
 '''
 
-### NOTE: This is modified source code from another repo: https://github.com/rnsharma478/ChemEXIN
+### PLEASE SEE "MODIFICATIONS.md" IN THE ROOT DIRECTORY OF THIS CLONE FOR MORE DETAILS!!
+### NOTE: This is modified source code from another repo called ChemEXIN (https://github.com/rnsharma478/ChemEXIN),
+### which was the culmination of work that I was NOT involved in (https://doi.org/10.1039/D4MO00241E).
 ### This file, and others in the src/ directory of this repo clone, were modified by Jonathan Hummel for 
 ### a capstone research project in the Brandeis University GPS Bioinformatics Program that involved creating and
 ### evaluating my own implementation of the same underlying from the original authors (i.e. the researchers listed above).
@@ -17,7 +19,7 @@ Lab Webpage: www.scfbio-iitd.res.in
 ### automatically make predictions for a larger number of sequences. This was was necessary for the benchmarking.
 ### I was very careful to avoid altering anything that could affect the performance of the core prediction pipeline.
 ### Please see the preprint "Evaluation of a structure-based method for ab initio gene detection using deep learning"
-### for the final results, as well as more context (https://doi.org/10.64898/2025.12.19.694709)
+### for the final results of the capstone, as well as more context (https://doi.org/10.64898/2025.12.19.694709)
 
 
 import time
