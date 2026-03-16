@@ -1,3 +1,7 @@
+***This is a modified clone of the original repository (ChemEXIN). Please see [MODIFICATIONS.md](MODIFICATIONS.md) for more details!***
+
+***What follows is the contents of the README.md from the original repository.***
+
 # ChemEXIN
 
 An open-source, deep learning integrated, physicochemical property-based exon-intron boundary prediction method. It is based on a three-dimensional convolutional neural network (3D-CNN) architecture. Three organism-specific (_Homo sapiens_, _Mus musculus_, and _Caenorhabditis elegans_) models have been built and implemented in the final prediction pipeline. The universality of ChemEXIN lies in its ability to predict exon-intron boundaries across varying lengths of known genes (180 to ~2,500,000 bps) in the organisms under study.
