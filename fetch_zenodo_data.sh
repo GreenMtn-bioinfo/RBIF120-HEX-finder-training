@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # Fetches supplementary data from Zenodo for this research archive on GitHub (https://github.com/GreenMtn-bioinfo/RBIF120-HEX-finder-training)
-# This script points to the the "main" Zenodo record ID (19074687), which represents all versions
-# and always resolves to the latest version: https://zenodo.org/records/19074687 (DOI: 10.5281/zenodo.19074687)
+# This script points to the the latest Zenodo record ID (19114650), which will need to be updated if the record is updated
+# The main record for all versions is 19074687: https://zenodo.org/records/19074687 (DOI: 10.5281/zenodo.19074687)
 
 set -e
 
 # Define Zenodo record ID and file names
-ZENODO_RECORD_ID="19074687"
+ZENODO_RECORD_ID="19114650"
 FILES=(
     "1_Exon_Annotation.zip"
     "2_Selected_Coords_Seqs.zip"
@@ -49,7 +49,7 @@ for FILE in "${FILES[@]}"; do
     download_file "$DOWNLOAD_URL" "$FILE"
     
     echo "Extracting $FILE..."
-    unzip -q -o "$FILE" -d $(echo "$FILE" | sed 's/.zip//')
+    unzip -q -o "$FILE"
     
     echo "Cleaning up $FILE..."
     rm -f "$FILE"
