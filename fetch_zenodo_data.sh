@@ -16,7 +16,7 @@ FILES=(
     "ChemEXIN_modified.zip"
 )
 
-# Offer the user a change to avoid download/extraction to the wrong directories
+# Offer the user a chance to avoid download/extraction to the wrong directories
 read -p "Please confirm: Are you are running this script from the ROOT directory of the repository? (y/n) " name
 if [[ "$name" == "y" || "$name" == "yes" ]]; then
   echo "Starting data fetch from Zenodo record: $ZENODO_RECORD_ID..."
@@ -26,11 +26,27 @@ else
   exit 1
 fi
 
+# Checks if the user has wget or curl installed and uses whichever is available (if any)
+download_file() {
+    local URL="$1"
+    local OUTPUT_NAME="$2"
+
+    if command -v curl &> /dev/null; then
+        curl -L -o "$OUTPUT_NAME" "$URL"
+    elif command -v wget &> /dev/null; then
+        wget -q --show-progress -O "$OUTPUT_NAME" "$URL"
+    else
+        echo "Error: Neither 'curl' nor 'wget' was found on your system."
+        echo "Please install one of them to download the datasets."
+        exit 1
+    fi
+}
+
 # Download and extract each file
 for FILE in "${FILES[@]}"; do
     echo "Downloading $FILE..."
-    
-    curl -L -o "$FILE" "https://zenodo.org/records/${ZENODO_RECORD_ID}/files/${FILE}?download=1"
+    DOWNLOAD_URL="https://zenodo.org/records/${ZENODO_RECORD_ID}/files/${FILE}?download=1"
+    download_file "$DOWNLOAD_URL" "$FILE"
     
     echo "Extracting $FILE..."
     unzip -q -o "$FILE" -d $(echo "$FILE" | sed 's/.zip//')
