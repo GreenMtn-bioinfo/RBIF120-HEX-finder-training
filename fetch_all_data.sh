@@ -15,7 +15,7 @@ ZENODO_FILES=".zenodo"
 ZENODO_FETCH="fetch_zenodo_data.sh"
 
 # Check for the presence of all reference files
-if [ -f "$REFERENCE_DIR/$BASE_NAME.fna" ] && [ -f "$REFERENCE_DIR/$BASE_NAME.fai" ] && [ -f "$REFERENCE_DIR/$BASE_NAME.gff" ]; then
+if [ -f "$REFERENCE_DIR/$BASE_NAME.fna" ] && [ -f "$REFERENCE_DIR/$BASE_NAME.fna.fai" ] && [ -f "$REFERENCE_DIR/$BASE_NAME.gff" ]; then
   echo "All reference files for GRCh38.p14 already exist. Continuing on."
 else
   echo "One or more files for GRCh38.p14 do not exist. Initiating reference retrieval."

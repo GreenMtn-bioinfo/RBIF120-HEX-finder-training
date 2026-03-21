@@ -39,7 +39,7 @@ echo "Setup complete for $GPU_TYPE-compatible environment! Run 'conda activate $
 
 # Give the user a chance to automatically download the data files if they want
 echo "Would you like to automatically download externally hosted data for this research compendium?"
-read -n "You will be shown their decompressed sizes and given choices as to which files are downloaded and prepared. (y/n) " confirm
+read -p "You will be shown their decompressed sizes and given choices as to which files are downloaded and prepared. (y/n) " confirm
 if [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]]; then
     conda run -n "$ENV_NAME" "./fetch_all_data.sh"
 else

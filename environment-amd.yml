@@ -9,7 +9,9 @@ dependencies:
   - ipykernel
   - jupyterlab
   - pip
-  - wget
+  - wget # TODO: decide between wget or curl and update data retrieval scripts
+  - curl # TODO: decide between wget or curl and update data retrieval scripts
+  - bash
   - gzip
   - unzip
   - samtools=1.22

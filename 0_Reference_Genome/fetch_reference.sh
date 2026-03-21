@@ -4,15 +4,21 @@
 ## This script downloads the GRCh38.p14 genomic FASTA (.fna) and RefSeq annotation (.gff) files from the NCBI 
 ## FTP server, decompresses them, and indexes the FASTA file using samtools.
 ## Remember to check permissions and "chmod 700" or similar to this script before attempting to execute
-## Remember to run in an environment with gzip, wget, and samtools installed (see provided environment.yml directory)
+## Remember to run in an environment with gzip, wget or curl, and samtools installed (see provided environment.yml directory)
 
 DATA_PATH=$1 # This script takes one argument, which is a path to a directory to which the files should be downloaded and prepared
 FNA_path="https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/GCF_000001405.40_GRCh38.p14/GCF_000001405.40_GRCh38.p14_genomic.fna.gz"
 GFF_path="https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/GCF_000001405.40_GRCh38.p14/GCF_000001405.40_GRCh38.p14_genomic.gff.gz"
 
+# Check if wget or curl is installed
+if ! command -v wget &> /dev/null && ! command -v curl &> /dev/null; then
+    echo "Error: Neither wget nor curl is installed. Please install one of them and try again."
+    exit 1
+fi
+
 # If the user has not set the directory they want to download the files to, just use the directory this script lives in
 if [ -z "${DATA_PATH}" ]; then
-    DATA_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    DATA_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/"
 fi
 
 # Prompt the user to continue and accept the space requirement
@@ -21,10 +27,15 @@ read -p "This will take up ~3 GB of disk space post-decompression. (y/n) " confi
 
 # Fetch reference genome and annotation files
 echo "Fetching FNA and GFF files from NCBI FTP server..."
-wget -P "$DATA_PATH" "$FNA_path" && wget -P "$DATA_PATH" "$GFF_path"
-last_status=$?
+if command -v wget &> /dev/null; then
+    wget -P "$DATA_PATH" "$FNA_path" && wget -P "$DATA_PATH" "$GFF_path"
+    last_status=$?
+elif command -v curl &> /dev/null; then
+    curl -o "$DATA_PATH"GCF_000001405.40_GRCh38.p14_genomic.fna.gz "$FNA_path" && curl -o "$DATA_PATH"GCF_000001405.40_GRCh38.p14_genomic.gff.gz "$GFF_path"
+    last_status=$?
+fi
 
-# If the files downloaded successfully, decompress the files and delete reaming .gz's
+# If the files downloaded successfully, decompress the files and delete remaining .gz's
 if [ $last_status -eq 0 ]; then
     echo "Files successfully downloaded! Decompressing them..."
     gunzip "$DATA_PATH"*.gz
