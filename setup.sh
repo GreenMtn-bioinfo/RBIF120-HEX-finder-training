@@ -36,13 +36,3 @@ conda run -n "$ENV_NAME" python -m ipykernel install --user --name="$ENV_NAME" -
 
 # Final success message
 echo "Setup complete for $GPU_TYPE-compatible environment! Run 'conda activate $ENV_NAME' to get started."
-
-# Give the user a chance to automatically download the data files if they want
-echo "Would you like to automatically download externally hosted data for this research compendium?"
-read -p "You will be shown their decompressed sizes and given choices as to which files are downloaded and prepared. (y/n) " confirm
-if [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]]; then
-    conda run -n "$ENV_NAME" "./fetch_all_data.sh"
-else
-    echo "You elected not to download the externally hosted data."
-    echo "Remember to run 'conda activate $ENV_NAME' before executing any Python code in this repository."
-fi

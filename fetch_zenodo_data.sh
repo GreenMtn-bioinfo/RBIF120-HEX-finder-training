@@ -18,7 +18,7 @@ declare -A FILES_SIZES=(
 KEY_ORDER=("1_Exon_Annotation.zip" "2_Selected_Coords_Seqs.zip" "3_Physicochemical_Profiles.zip" "4_Sliding_Window.zip" "ChemEXIN_modified.zip")
 
 # Offer the user a chance to avoid download/extraction to the wrong directories (or simply skip this step for their own reasons)
-echo "This script will fetch data files from Zenodo, which will occupy a total of ~11 GB once decompressed."
+echo "This script will fetch data files from Zenodo, which could occupy up to ~11 GB once decompressed."
 echo "You will be given the chance to pick and choose specific subsets of the data on Zenodo."
 echo "This script needs to be run within the ROOT directory of the repository or files will be misplaced."
 read -p "Please confirm that you are running it properly and would like to proceed. (y/n) " confirm
