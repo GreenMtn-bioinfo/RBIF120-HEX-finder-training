@@ -189,7 +189,7 @@ The only file this script will not get you is `3_Physicochemical_Profiles/all_pr
 
 In case you plan on running the code in this repository, or even if you just want a better understanding of how this project was conducted, below is an overview of each of the code-containing files in approximate run order:
 
-**NOTE:** Some of the scripts and notebooks listed below have logic to avoid overwriting existing data in their intended output directory. This means that, out-of-box, the data files included in this repo are a hindrance to running some of the code. If you really intend to re-run code from a particular script or notebook, you should first note the output directory listed for that file below (if any), and then consider renaming or deleting that directory prior to running the code.
+***NOTE:*** *Some of the scripts and notebooks listed below have logic to avoid overwriting existing data in their intended output directory. This means that, out-of-box, the data files included in this repo are a hindrance to running some of the code. If you really intend to re-run code from a particular script or notebook, you should first note the output directory listed for that file below (if any), and then consider renaming or deleting that directory prior to running the code.*
 
 1. [**preparation_1.py**](/preparation_1.py): Acts as a storage module for project-wide parameters and paths used by the other scripts, particularly the next two. When run directly, it pulls RefSeq MANE Select exon features from the GRCh38.p14 annotation GFF expected in [0_Reference_Genome/](/0_Reference_Genome/) and sorts them into two files by strand.
     + The output directory for this script is [1_Exon_Annotation/](/1_Exon_Annotation/).
