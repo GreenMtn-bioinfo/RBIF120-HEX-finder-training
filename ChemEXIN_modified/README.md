@@ -1,4 +1,4 @@
-***This is a modified clone of the original repository (ChemEXIN). Please see [MODIFICATIONS.md](MODIFICATIONS.md) for more details!***
+***This is a modified clone of the original repository ([ChemEXIN](https://github.com/rnsharma478/ChemEXIN)). Please see [MODIFICATIONS.md](MODIFICATIONS.md) for more details!***
 
 ***What follows is the contents of the README.md from the original repository.***
 
