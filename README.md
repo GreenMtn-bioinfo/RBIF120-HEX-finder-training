@@ -18,7 +18,7 @@ Part of the work described in the [preprint](https://doi.org/10.64898/2025.12.19
 
 # Using this repository
 
-While this repository is unsupported and was written without users in mind, it is hypothetically possible to run all of the Python code provided in the correct order and reproduce the results presented in the [preprint](https://doi.org/10.64898/2025.12.19.694709). If that is your goal, once setup is complete, please see the [Script and Notebook Overview](#script-and-notebook-overview) section for more context on each script and notebook and where they fall within this project. That said, this compendium already contains almost every intermediate and final data file, so re-running all of the code is not necessary.
+This repository is unsupported and was originally written without users in mind. However, it is technically possible to run all of the core Python code provided in the correct order and reproduce the results presented in the [preprint](https://doi.org/10.64898/2025.12.19.694709). If that is your goal, once setup is complete, please see the [Script and Notebook Overview](#script-and-notebook-overview) section for more context on each script and notebook and where they fall within this project. That said, this compendium already contains almost every intermediate and final data file, so re-running all of the code is not necessary.
 
 ## Pre-requisites
 
@@ -140,7 +140,7 @@ The conda environment built and configured in the previous section includes `ipy
     ```
     **OR**
     ```bash
-    jupyter lab # Simply navigate to and open the notebook of interest using the JupyterLab UI once it loads in your browser.
+    jupyter lab # Then simply open a notebook in the JupyterLab UI once it loads in your browser.
     ```
 
 ***Make sure the "Python (JH-RBIF120-project)" kernel is selected before running any code in any notebook!***
@@ -164,30 +164,32 @@ If you run this script, you will be prompted on which portions of the missing fi
 The only file this script will not get you is `3_Physicochemical_Profiles/all_profiles.npy`. This file contains the actual structural profiles for the entire training and testing set. It is ~90 GB, so it was not hosted on GitHub or Zenodo. The only way to get this file is to:
 
 1. Follow the steps in the [Code Dependencies Installation](#code-dependencies-installation) section and then ***activate the conda environment***:
+
     ```bash
     conda activate JH-RBIF120-project
     ```
 
 2. You will need to rename the [3_Physicochemical_Profiles/](/3_Physicochemical_Profiles/) directory, as the profile generation script will not overwrite existing data in its intended output directory:
+
     ```bash
-    mv 3_Physicochemical_Profiles/ 3_Physicochemical_Profiles_original/ # From within the repo's root directory!
+    mv 3_Physicochemical_Profiles/ 3_Physicochemical_Profiles_original/ # Within the repo's root directory!
     ```
 
 3. Run the following from the root directory of the repo:
-
     + You will **~90 GB of free disk space** before proceeding, please see [Disk Space Considerations](#disk-space-considerations) for more details.
 
     ```bash
     python profile_generator_3.py # This will take time, see next bullet point.
     ```
-    
+
     + Even with multithreading, this step is intensive and can take some time. For reference, it takes **~45 minutes** on a well-cooled desktop system with a 12-thread CPU (2.5 GHz nominal, ~4 GHz boosted multi-core) and 64 GB DDR5 RAM. 
+    + The version of the RefSeq MANE Select annotation fetched in the previous step is more recent than the one used in the original project. Because of this, your total number of profiles (i.e. the first dimension of the array) may vary slightly from the preprint, but it should still be close to ~5.6 M if all went well. This should not affect the results shown in the preprint in a major way.
 
 # Script and Notebook Overview
 
 In case you plan on running the code in this repository, or even if you just want a better understanding of how this project was conducted, below is an overview of each of the code-containing files in approximate run order:
 
-    NOTE: Some of the scripts and notebooks listed below have logic to avoid overwriting existing data in their intended output directory. This means that, out-of-box, the data files included in this repo are a hindrance to running some of the code. If you really intend to re-run code from a particular script or notebook, you should first note the output directory listed for that file below (if any), and then consider renaming or deleting that directory prior to running the code.
+**NOTE:** Some of the scripts and notebooks listed below have logic to avoid overwriting existing data in their intended output directory. This means that, out-of-box, the data files included in this repo are a hindrance to running some of the code. If you really intend to re-run code from a particular script or notebook, you should first note the output directory listed for that file below (if any), and then consider renaming or deleting that directory prior to running the code.
 
 1. [**preparation_1.py**](/preparation_1.py): Acts as a storage module for project-wide parameters and paths used by the other scripts, particularly the next two. When run directly, it pulls RefSeq MANE Select exon features from the GRCh38.p14 annotation GFF expected in [0_Reference_Genome/](/0_Reference_Genome/) and sorts them into two files by strand.
     + The output directory for this script is [1_Exon_Annotation/](/1_Exon_Annotation/).
@@ -220,7 +222,7 @@ In case you plan on running the code in this repository, or even if you just wan
 
 8. [**results_plotting_aggregation_CV.ipynb**](/results_plotting_aggregation_CV.ipynb): This is where the data from the cross-validations runs for the three models was aggregated and plotted. The supplemental figures in the [preprint](https://doi.org/10.64898/2025.12.19.694709) were creating using the code in this notebook.
 
-9. [**results_plotting_aggregation_FINAL.ipynb**](/results_plotting_aggregation_FINAL.ipynb): This is where the data from the final training and evaluation for the three models was aggregated and plotted. Figure 7 in the [preprint](https://doi.org/10.64898/2025.12.19.694709) was created using the code in this notebook.
+9. [**results_plotting_aggregation_FINAL.ipynb**](/results_plotting_aggregation_FINAL.ipynb): This is where the data from the final training and evaluation for the three models was aggregated and plotted. Figure 7 in the preprint was created using the code in this notebook.
 
 10. [**sliding_window_testing.ipynb**](/sliding_window_testing.ipynb): This is where the "sliding window" evaluation discussed in the preprint was conducted and visualized. This notebook handled the sampling of the three sets of testing sequences from the held-out regions, as well as running the entire prediction pipeline on each sequence from those sets. It calculated performance metrics for the three models over each sequence set for my models and ChemEXIN, using RefSeq MANE Select exons as truth features. Finally, it handled plotting of the results for my models and ChemEXIN, as well as displaying predictions from either pipeline next to RefSeq exons for specific sequences.
     + [ChemEXIN_modified/main.py](/ChemEXIN_modified/main.py): While the Jupyter notebook above handled most of the metric calculation and plotting, this script ran the ChemEXIN prediction pipeline and logged its predictions for all three sequence sets. This is a modified version of the [original "main.py" script](https://github.com/rnsharma478/ChemEXIN/blob/master/main.py). It technically needs to be run **BEFORE** any code in [sliding_window_testing.ipynb](/sliding_window_testing.ipynb) is run. Modification of the authors' original source code was necessary to automate the ChemEXIN tool for the benchmarking analysis. Please see [ChemEXIN_modified/MODIFICATIONS.md](/ChemEXIN_modified/MODIFICATIONS.md) for more details on the changes made. Please also see the [External Code and Models](#external-code-and-models) section for details on exactly which components of this repository I am not the original author of.
